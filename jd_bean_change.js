@@ -216,14 +216,6 @@ if(DisableIndex!=-1){
 	EnableJxBeans=false
 }
 
-//京东赚赚
-let EnableJdZZ=true;
-DisableIndex = strDisableList.findIndex((item) => item === "京东赚赚");
-if(DisableIndex!=-1){
-	console.log("检测到设定关闭京东赚赚查询");
-	EnableJdZZ=false;
-}
-
 //东东农场
 let EnableJdFruit=true;
 DisableIndex = strDisableList.findIndex((item) => item === "东东农场");
@@ -239,7 +231,6 @@ if(DisableIndex!=-1){
 	console.log("检测到设定关闭特价金币查询");
 	EnableJdSpeed=false;	
 }
-
 
 //领现金
 let EnableCash=true;
@@ -323,7 +314,6 @@ if(DisableIndex!=-1){
 			$.message = '';
 			$.balance = 0;
 			$.expiredBalance = 0;
-			$.JdzzNum = 0;			
 			$.JdFarmProdName = '';
 			$.JdtreeEnergy = 0;
 			$.JdtreeTotalEnergy = 0;
@@ -438,7 +428,6 @@ if(DisableIndex!=-1){
 			await $.wait(1000);
 			
 			await Promise.all([        
-			        getJdZZ(), //京东赚赚		        
 			        cash(), //特价金币
 			        bean(), //京豆查询
 			        jdCash(), //领现金
@@ -797,12 +786,7 @@ async function showMsg() {
 	
 	if ($.JDtotalcash) {
 		ReturnMessage += `【特价金币】${$.JDtotalcash}币(≈${($.JDtotalcash / 10000).toFixed(2)}元)\n`;
-	}
-	
-	if ($.JdzzNum) {
-		ReturnMessage += `【京东赚赚】${$.JdzzNum}币(≈${($.JdzzNum / 10000).toFixed(2)}元)\n`;
-	}
-	
+	}	
 	if($.ECardinfo)
 		ReturnMessage += `【礼卡余额】${$.ECardinfo}\n`;
 	
@@ -1664,49 +1648,6 @@ function getCoupon() {
             }
         })
     })
-}
-
-function getJdZZ() {
-	if (!EnableJdZZ)
-		return;
-	return new Promise(resolve => {
-		$.get(taskJDZZUrl("interactTaskIndex"), async(err, resp, data) => {
-			try {
-				if (err) {
-					console.log(`${JSON.stringify(err)}`);
-					console.log(`京东赚赚API请求失败，请检查网路重试`);
-				} else {
-					if (safeGet(data)) {
-						data = JSON.parse(data);						
-						$.JdzzNum = data.data.totalNum;
-					}
-				}
-			} catch (e) {
-				//$.logErr(e, resp)
-				console.log(`京东赚赚数据获取失败`);
-			}
-			finally {
-				resolve(data);
-			}
-		})
-	})
-}
-
-function taskJDZZUrl(functionId, body = {}) {
-	return {
-		url: `${JD_API_HOST}?functionId=${functionId}&body=${escape(JSON.stringify(body))}&client=wh5&clientVersion=9.1.0`,
-		headers: {
-			'Cookie': cookie,
-			'Host': 'api.m.jd.com',
-			'Connection': 'keep-alive',
-			'Content-Type': 'application/json',
-			'Referer': 'http://wq.jd.com/wxapp/pages/hd-interaction/index/index',
-			'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
-			'Accept-Language': 'zh-cn',
-			'Accept-Encoding': 'gzip, deflate, br',
-		},
-		timeout: 10000
-	}
 }
 
 function jdfruitRequest(function_id, body = {}, timeout = 1000) {

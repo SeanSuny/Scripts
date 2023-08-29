@@ -6,9 +6,9 @@ new Env('微信-美添赚');
 
 打开活动入口，抓包的任意接口cookies中的Authorization参数,
 青龙添加环境变量名称 ：wx_mtz
-青龙添加环境变量参数 ：[{'Authorization': 'share:login:729ac1356a94eb616df2fdb7407bd2ea'}]
+青龙添加环境变量参数 ：[{'Authorization': 'xxxx'}]
 单账户 [{'Authorization': 'xxxx'}]
-多账户[{'Authorization': 'xxxx'},{'Authorization': 'xxxx'},{'Authorization': 'xxxx'},]
+多账户 [{'Authorization': 'xxxx'},{'Authorization': 'xxxx'},{'Authorization': 'xxxx'},]
 例如：[{'Authorization': 'share:login:7291356a9xxxxxxdb7bd2ea'}]
 例如：[{'Authorization': 'share:login:7291356a9xxxxxxdb7bd2ea'},{'Authorization': 'share:login:7291356a9xxxxxxdb7bd2ea'},]
 

@@ -29,6 +29,7 @@ import hashlib
 import requests
 import random
 import re
+import os
 
 checkDict = {
     'MzkyMzI5NjgxMA==': ['每天趣闻事', ''],
@@ -329,10 +330,14 @@ class HHYD():
 
 if __name__ == '__main__':
     printf = 0  # 打印调试日志0不打印，1打印，若运行异常请打开调试
-    appToken = 'xxxx'  # 这个是填wxpusher的appToken
-    topicIds = 4781  # 这个是wxpusher的topicIds改成你自己的
-    key = 'xxxx'  # key从这里获取http://175.24.153.42:8882/getkey
-    CKList = [{'name': '备注', 'gfsessionid': 'xxxx'}]
+    wx_appToken = os.environ['wx_appToken']
+    wx_topicIds = os.environ['wx_topicIds']
+    wx_key = os.environ['wx_key']
+    wx_gb = os.environ['wx_gb']
+    appToken = wx_appToken  # 这个是填wxpusher的appToken
+    topicIds = wx_topicIds  # 这个是wxpusher的topicIds改成你自己的
+    key = wx_key  # key从这里获取http://175.24.153.42:8882/getkey
+    CKList = [{'name': '备注', 'gfsessionid': wx_gb}]
     getmsg()
     for i in CKList:
         api = HHYD(i)

@@ -2,8 +2,7 @@
 cron: 3 */1 * * *
 new Env('微信-美添赚');
 
-活动入口,微信打开：http://tg.1693182678.api.mengmorwpt2.cn/h5_share/ads/tg?user_id=115772
-活动入口,微信打开：http://tg.1693182678.api.mengmorwpt2.cn/h5_share/ads/tg?user_id=115772
+活动入口,微信打开：http://tg.1693277586.api.mengmorwpt2.cn/h5_share/ads/tg?user_id=126014
 打开活动入口，抓包的任意接口cookies中的Authorization参数,
 
 填到脚本最下方的,脚本最下方的,脚本最下方的 CKList配置中,把xxxx替换成你的Authorization参数

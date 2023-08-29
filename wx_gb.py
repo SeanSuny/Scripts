@@ -7,8 +7,8 @@ new Env('微信-钢镚');
 打开活动入口，抓包的任意接口cookies中的gfsessionid参数,
 青龙添加环境变量名称 ：wx_gb
 青龙添加环境变量参数 ：[{'gfsessionid': 'xxxx'}]
-单账户 CKList=[{'gfsessionid': 'xxxx'}]
-多账户CKList=[{'gfsessionid': 'xxxx'},{'gfsessionid': 'xxxx'},{'gfsessionid': 'xxxx'},]
+单账户 [{'gfsessionid': 'xxxx'}]
+多账户 [{'gfsessionid': 'xxxx'},{'gfsessionid': 'xxxx'},{'gfsessionid': 'xxxx'},]
 
 内置推送第三方 wxpusher（脚本最下方填写参数）
 青龙添加环境变量名称 ：wx_pushconfig

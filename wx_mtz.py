@@ -3,29 +3,29 @@ cron: 3 */1 * * *
 new Env('微信-美添赚');
 
 活动入口,微信打开：http://tg.1693277586.api.mengmorwpt2.cn/h5_share/ads/tg?user_id=126014
+
 打开活动入口，抓包的任意接口cookies中的Authorization参数,
-
-填到脚本最下方的,脚本最下方的,脚本最下方的 CKList配置中,把xxxx替换成你的Authorization参数
-填到脚本最最下方的,脚本最最下方的,脚本最最下方的 CKList配置中,把xxxx替换成你的Authorization参数
-填到脚本最最最下方的,脚本最最最下方的,脚本最最下方的 CKList配置中,把xxxx替换成你的Authorization参数
-
-单账户 CKList=[{'Authorization': 'xxxx'}]
-多账户CKList=[{'Authorization': 'xxxx'},{'Authorization': 'xxxx'},{'Authorization': 'xxxx'},]
-
-其他参数说明（脚本最下方填写参数）
+青龙添加环境变量名称 ：wx_mtz
+青龙添加环境变量参数 ：[{'Authorization': 'share:login:729ac1356a94eb616df2fdb7407bd2ea'}]
+单账户 [{'Authorization': 'xxxx'}]
+多账户[{'Authorization': 'xxxx'},{'Authorization': 'xxxx'},{'Authorization': 'xxxx'},]
+例如：[{'Authorization': 'share:login:7291356a9xxxxxxdb7bd2ea'}]
+例如：[{'Authorization': 'share:login:7291356a9xxxxxxdb7bd2ea'},{'Authorization': 'share:login:7291356a9xxxxxxdb7bd2ea'},]
 
 内置推送第三方 wxpusher（脚本最下方填写参数）
-appToken = 'xxx'  # 这个是填wxpusher的appToken
-topicIds = 0  # 这个是wxpusher的topicIds改成你自己的,在主题管理里能看到应用的topicIds
-具体使用方法请看文档地址：https://wxpusher.zjiecode.com/docs/#/
+青龙添加环境变量名称 ：pushconfig
+青龙添加环境变量参数 ：{"printf":0,"appToken":"xxxx","topicIds":4781,"key":"xxxx"}
+例如：{"printf":0,"appToken":"AT_r1vNXQdfgxxxxxscPyoORYg","topicIds":1234,"key":"642ae5f1xxxxx6d2334c"}
 
-回调服务器（脚本最下方填写参数）
-key=''这个是回调服务器的key
-key访问http://175.24.153.42:8882/getkey获取
+printf 0是不打印调试日志，1是打印调试日志
+appToken 这个是填wxpusher的appToken
+topicIds 这个是wxpusher的topicIds改成你自己的,在主题管理里能看到应用的topicIds 具体使用方法请看文档地址：https://wxpusher.zjiecode.com/docs/#/
+key 访问http://175.24.153.42:8882/getkey获取
 
 定时运行每小时一次
 达到标准自动提现
 '''
+import json
 import time
 import requests
 import random
@@ -36,7 +36,7 @@ checkDict={
 'MzkzNjI3NDAwOA==':['木新领袋管家','gh_04e096463e91'],
 }
 def getmsg():
-    lvsion = 'v1.5'
+    lvsion = 'v1.6'
     r=''
     try:
         u='http://175.24.153.42:8881/getmsg'
@@ -266,6 +266,9 @@ class MTZYD():
         printjson(cr.text)
         print('本次阅读已完成')
     def testCheck(self, a, link):
+        if a[4]==[]:
+            print(link)
+            return True
         if checkDict.get(a[4]) != None:
             setstatus()
             for i in range(60):
@@ -303,16 +306,33 @@ class MTZYD():
             self.user_info()
         self.withdraw()
 if __name__ == '__main__':
-    printf = 0  # 打印调试日志0不打印，1打印，若运行异常请打开调试
-    wx_appToken = os.environ['wx_appToken']
-    wx_topicIds = os.environ['wx_topicIds']
-    wx_key = os.environ['wx_key']
-    wx_mtz = os.environ['wx_mtz']
-    appToken = wx_appToken  # 这个是填wxpusher的appToken
-    topicIds = wx_topicIds  # 这个是wxpusher的topicIds改成你自己的
-    key = wx_key  # key从这里获取http://175.24.153.42:8882/getkey
-    CKList = wx_mtz
+    pushconfig = os.getenv('pushconfig')
+    if pushconfig==None:
+        print('请检查你的推送变量名称是否填写正确')
+        exit(0)
+    try:
+        pushconfig=json.loads(pushconfig.replace("'", '"'))
+    except Exception as e:
+        print(e)
+        print(pushconfig)
+        print('请检查你的推送变量参数是否填写正确')
+        exit(0)
+    mtzconfig = os.getenv('wx_mtz')
+    if mtzconfig==None:
+        print('请检查你的美添赚脚本变量名称是否填写正确')
+        exit(0)
+    try:
+        mtzconfig=json.loads(mtzconfig.replace("'", '"'))
+    except Exception as e:
+        print(e)
+        print(mtzconfig)
+        print('请检查你的美添赚脚本变量参数是否填写正确')
+        exit(0)
+    printf = pushconfig['printf']  # 打印调试日志0不打印，1打印，若运行异常请打开调试
+    appToken = pushconfig['appToken']  # 这个是填wxpusher的appToken
+    topicIds = pushconfig['topicIds']  # 这个是wxpusher的topicIds改成你自己的
+    key = pushconfig['key']  # key从这里获取http://175.24.153.42:8882/getkey
     getmsg()
-    for i in CKList:
+    for i in mtzconfig:
         api=MTZYD(i)
         api.run()

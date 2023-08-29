@@ -1,5 +1,5 @@
 '''
-活动入口,微信打开：https://entry-1318684421.cos.ap-nanjing.myqcloud.com/cos_b.html?openId=oiDdr54Nefy0xxsTr6SGgdSzpWj0
+活动入口,微信打开：https://entry-1318684421.cos.ap-nanjing.myqcloud.com/cos_b.html?openId=oiDdr563TOZlmaRzrEPgBIM_n6DQ
 打开活动入口，抓包的任意接口cookies中的authtoken参数,填到脚本最下方的,脚本最下方的，脚本最下方的mycklist中，把xxxx替换成你的authtoken参数
 填写格式
 单账户mycklist=[{'authtoken': 'xxxx'}]

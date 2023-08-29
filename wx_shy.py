@@ -2,9 +2,9 @@
 cron: 19 */1 * * *
 new Env('微信-三合一阅读');
 
-星空阅读阅读：http://mr1692169663544.uznmvev.cn/ox/index.html?mid=XG7QUVEEH
-花花阅读：http://mr1692501126125.fgrtlkg.cn/user/index.html?mid=QS5PQAEZH
-元宝阅读：http://mr1692766622670.kgtpecv.cn/coin/index.html?mid=RG5RC7LDU
+星空阅读阅读：http://mr1693299085764.onzrxjs.cn/ox/index.html?mid=3K4T7ZWR6
+花花阅读：http://mr1693299196424.fgrtlkg.cn/user/index.html?mid=CG5RVPQKU
+元宝阅读：http://mr1693299224410.kgtpecv.cn/coin/index.html?mid=CX6EPSR2K
 '''
 import requests
 import time

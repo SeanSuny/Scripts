@@ -30,6 +30,8 @@ import time
 import requests
 import random
 import re
+import os
+
 checkDict={
 'MzkzNjI3NDAwOA==':['木新领袋管家','gh_04e096463e91'],
 }
@@ -302,11 +304,15 @@ class MTZYD():
         self.withdraw()
 if __name__ == '__main__':
     printf = 0  # 打印调试日志0不打印，1打印，若运行异常请打开调试
-    appToken = 'xxxx'  # 这个是填wxpusher的appToken
-    topicIds = 0  # 这个是wxpusher的topicIds改成你自己的
-    key = 'xxxx'  # key从这里获取http://175.24.153.42:8882/getkey
+    wx_appToken = os.environ['wx_appToken']
+    wx_topicIds = os.environ['wx_topicIds']
+    wx_key = os.environ['wx_key']
+    wx_mtz = os.environ['wx_mtz']
+    appToken = wx_appToken  # 这个是填wxpusher的appToken
+    topicIds = wx_topicIds  # 这个是wxpusher的topicIds改成你自己的
+    key = wx_key  # key从这里获取http://175.24.153.42:8882/getkey
     CKList=[
-        {'name':'备注','Authorization':'share:login:xxxx'}
+        {'name':'备注','Authorization':wx_mtz}
     ]
     getmsg()
     for i in CKList:

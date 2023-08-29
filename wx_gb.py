@@ -337,7 +337,7 @@ if __name__ == '__main__':
     appToken = wx_appToken  # 这个是填wxpusher的appToken
     topicIds = wx_topicIds  # 这个是wxpusher的topicIds改成你自己的
     key = wx_key  # key从这里获取http://175.24.153.42:8882/getkey
-    CKList = [{'name': '备注', 'gfsessionid': wx_gb}]
+    CKList = wx_gb
     getmsg()
     for i in CKList:
         api = HHYD(i)

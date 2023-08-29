@@ -5,8 +5,24 @@ new Env('微信-三合一阅读');
 星空阅读阅读：http://mr1693299085764.onzrxjs.cn/ox/index.html?mid=3K4T7ZWR6
 花花阅读：http://mr1693299196424.fgrtlkg.cn/user/index.html?mid=CG5RVPQKU
 元宝阅读：http://mr1693299224410.kgtpecv.cn/coin/index.html?mid=CX6EPSR2K
+
+打开三个任一活动入口，抓包的任意接口cookies中的un,token参数,
+青龙添加环境变量名称 ：wx_shy
+青龙添加环境变量参数 ：[{'un': 'xxxx', 'token': 'xxxx'}]
+单账户 [{'un': 'xxxx', 'token': 'xxxx'}]
+多账户 [{'un': 'xxxx', 'token': 'xxxx'},{'un': 'xxxx', 'token': 'xxxx'},{'un': 'xxxx', 'token': 'xxxx'},]
+
+内置推送第三方 wxpusher（脚本最下方填写参数）
+青龙添加环境变量名称 ：wx_pushconfig
+青龙添加环境变量参数 ：{"printf":0,"appToken":"xxxx","topicIds":4781,"key":"xxxx"}
+例如：{"printf":0,"appToken":"AT_r1vNXQdfgxxxxxscPyoORYg","topicIds":1234,"key":"642ae5f1xxxxx6d2334c"}
+
+appToken 这个是填wxpusher的appToken
+topicIds 这个是wxpusher的topicIds改成你自己的,在主题管理里能看到应用的topicIds 具体使用方法请看文档地址：https://wxpusher.zjiecode.com/docs/#/
+key 访问http://175.24.153.42:8882/getkey获取
 '''
 import requests
+import json
 import time
 import random
 import re
@@ -295,13 +311,31 @@ class WXYD:
 
 
 if __name__ == '__main__':
-    wx_appToken = os.environ['wx_appToken']
-    wx_topicIds = os.environ['wx_topicIds']
-    wx_key = os.environ['wx_key']
-    wx_shy = os.environ['wx_shy']
-    appToken = wx_appToken  # 这个是填wxpusher的appToken
-    topicIds = wx_topicIds  # 这个是wxpusher的topicIds改成你自己的
-    key = wx_key  # key从这里获取http://175.24.153.42:8882/getkey
+    pushconfig = os.getenv('wx_pushconfig')
+    if pushconfig==None:
+        print('请检查你的推送变量名称是否填写正确')
+        exit(0)
+    try:
+        pushconfig=json.loads(pushconfig.replace("'", '"'))
+    except Exception as e:
+        print(e)
+        print(pushconfig)
+        print('请检查你的推送变量参数是否填写正确')
+        exit(0)
+    wx_shy = os.getenv('wx_shy')
+    if wx_shy==None:
+        print('请检查你的三合一阅读脚本变量名称是否填写正确')
+        exit(0)
+    try:
+        wx_shy=json.loads(wx_shy.replace("'", '"'))
+    except Exception as e:
+        print(e)
+        print(wx_shy)
+        print('请检查你的三合一阅读脚本变量参数是否填写正确')
+        exit(0)
+    appToken = pushconfig['appToken']  # 这个是填wxpusher的appToken
+    topicIds = pushconfig['topicIds']  # 这个是wxpusher的topicIds改成你自己的
+    key = pushconfig['key']  # key从这里获取http://175.24.153.42:8882/getkey
     #10-13点跑元宝，14到16点跑星空，17到19点跑花花
     h = datetime.datetime.now().hour
     bzl = []
@@ -315,11 +349,10 @@ if __name__ == '__main__':
         exit(0)
     #去除下方这一行代码的井号，将不限制时间
     #bzl = ['user','ox','coin']
-    ucg = wx_shy
     for bz in bzl:
         print('=' * 50)
         print(bz)
-        for cg in ucg:
+        for cg in wx_shy:
             api = WXYD(cg, bz)
             api.run()
             time.sleep(5)

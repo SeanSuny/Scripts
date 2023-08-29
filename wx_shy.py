@@ -1,5 +1,5 @@
 '''
-cron: 9 */1 * * *
+cron: 19 */1 * * *
 new Env('微信-三合一阅读');
 
 星空阅读阅读：http://mr1692169663544.uznmvev.cn/ox/index.html?mid=XG7QUVEEH

@@ -7,8 +7,8 @@ new Env('微信-从零开始阅读');
 打开活动入口，抓包的任意接口cookies中的authtoken参数,
 青龙添加环境变量名称 ：wx_clksyd
 青龙添加环境变量参数 ：[{'authtoken': 'xxxx'}]
-单账户mycklist=[{'authtoken': 'xxxx'}]
-多账户mycklist=[{'authtoken': 'xxxx'},{'authtoken': 'xxxx'},{'authtoken': 'xxxx'},]
+单账户 [{'authtoken': 'xxxx'}]
+多账户 [{'authtoken': 'xxxx'},{'authtoken': 'xxxx'},{'authtoken': 'xxxx'},]
 
 内置推送第三方 wxpusher（脚本最下方填写参数）
 青龙添加环境变量名称 ：wx_pushconfig

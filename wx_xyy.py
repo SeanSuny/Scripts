@@ -32,7 +32,46 @@ import requests
 import random
 import re
 from urllib.parse import urlparse, parse_qs
-
+#公众号字典
+checkDict={
+'MzkxNTE3MzQ4MQ==':['香姐爱旅行','gh_54a65dc60039'],
+'Mzg5MjM0MDEwNw==':['我本非凡','gh_46b076903473'],
+'MzUzODY4NzE2OQ==':['多肉葡萄2020','gh_b3d79cd1e1b5'],
+'MzkyMjE3MzYxMg==':['Youhful','gh_b3d79cd1e1b5'],
+'MzkxNjMwNDIzOA==':['少年没有乌托邦3','gh_b3d79cd1e1b5'],
+'Mzg3NzUxMjc5Mg==':['星星诺言','gh_b3d79cd1e1b5'],
+'Mzg4NTcwODE1NA==':['斑马还没睡123','gh_b3d79cd1e1b5'],
+'Mzk0ODIxODE4OQ==':['持家妙招宝典','gh_b3d79cd1e1b5'],
+'Mzg2NjUyMjI1NA==':['Lilinng','gh_b3d79cd1e1b5'],
+'MzIzMDczODg4Mw==':['有故事的同学Y','gh_b3d79cd1e1b5'],
+'Mzg5ODUyMzYzMQ==':['789也不行','gh_b3d79cd1e1b5'],
+'MzU0NzI5Mjc4OQ==':['皮蛋瘦肉猪','gh_58d7ee593b86'],
+'Mzg5MDgxODAzMg==':['北北小助手','gh_58d7ee593b86'],
+}
+def getmsg():
+    lvsion = 'v1.1'
+    r=''
+    try:
+        u='http://175.24.153.42:8881/getmsg'
+        p={'type':'xyyyd'}
+        r=requests.get(u,params=p)
+        rj=r.json()
+        version=rj.get('version')
+        gdict = rj.get('gdict')
+        gmmsg = rj.get('gmmsg')
+        print('系统公告:',gmmsg)
+        print(f'最新版本{version},当前版本{lvsion}')
+        print(f'系统的公众号字典{len(gdict)}个:{gdict}')
+        print(f'本脚本公众号字典{len(checkDict.values())}个:{list(checkDict.keys())}')
+        print('='*50)
+    except Exception as e:
+        print(r.text)
+        print(e)
+        print('公告服务器异常')
+def printjson(text):
+    if printf==0:
+        return
+    print(text)
 def push(title,link,text,type):
     str1='''<!DOCTYPE html>
 <html lang="zh-CN">
@@ -55,8 +94,7 @@ def push(title,link,text,type):
 <body>
 <p>TEXT</p><br>
 <p><a href="http://175.24.153.42:8882/lookstatus?key=KEY&type=TYPE">查看状态</a></p><br>
-<p><a href="LINK">阅读检测文章</a></p><br>
-<p><a href="http://175.24.153.42:8882/setstatus?key=KEY&type=TYPE&val=0">阅读完成确认</a></p><br>
+<p><a href="http://175.24.153.42:8882/lookwxarticle?key=KEY&type=TYPE&wxurl=LINK">点击阅读检测文章</a></p><br>
 </body>
 </html>
     '''
@@ -76,7 +114,6 @@ def push(title,link,text,type):
     except:
         print('推送失败！')
         return False
-
 def getinfo(link):
     try:
         r=requests.get(link)
@@ -108,20 +145,6 @@ def getinfo(link):
         return False
 def ts():
     return str(int(time.time()))+'000'
-checkDict={
-'MzkxNTE3MzQ4MQ==':['香姐爱旅行','gh_54a65dc60039'],
-'Mzg5MjM0MDEwNw==':['我本非凡','gh_46b076903473'],
-'MzUzODY4NzE2OQ==':['多肉葡萄2020','gh_b3d79cd1e1b5'],
-'MzkyMjE3MzYxMg==':['Youhful','gh_b3d79cd1e1b5'],
-'MzkxNjMwNDIzOA==':['少年没有乌托邦3','gh_b3d79cd1e1b5'],
-'Mzg3NzUxMjc5Mg==':['星星诺言','gh_b3d79cd1e1b5'],
-'Mzg4NTcwODE1NA==':['斑马还没睡123','gh_b3d79cd1e1b5'],
-'Mzk0ODIxODE4OQ==':['持家妙招宝典','gh_b3d79cd1e1b5'],
-'Mzg2NjUyMjI1NA==':['Lilinng','gh_b3d79cd1e1b5'],
-'MzIzMDczODg4Mw==':['有故事的同学Y','gh_b3d79cd1e1b5'],
-'Mzg5ODUyMzYzMQ==':['789也不行','gh_b3d79cd1e1b5'],
-'MzU0NzI5Mjc4OQ==':['皮蛋瘦肉猪','gh_58d7ee593b86'],
-}
 
 def setstatus():
     u='http://175.24.153.42:8882/setstatus'
@@ -175,7 +198,7 @@ class HHYD():
             r=self.sec.get(u)
             rj=r.json()
             if rj.get('errcode')==0:
-                print(r.json())
+                printjson(r.json())
                 return True
             else:
                 print(f'获取用户信息失败，账号异常')
@@ -189,7 +212,7 @@ class HHYD():
         try:
             u=f'http://1692416143.3z2rpa.top/yunonline/v1/hasWechat?unionid={self.ysm_uid}'
             r=self.sec.get(u)
-            print(r.json())
+            printjson(r.json())
         except:
             print(r.text)
             return False
@@ -198,7 +221,7 @@ class HHYD():
         try:
             u=f'http://1692416143.3z2rpa.top/yunonline/v1/gold?unionid={self.ysm_uid}&time={ts()}000'
             r=self.sec.get(u)
-            print(r.json())
+            printjson(r.json())
             rj = r.json()
             self.remain=rj.get("data").get("last_gold")
             print(f'今日已经阅读了{rj.get("data").get("day_read")}篇文章,剩余{rj.get("data").get("remain_read")}未阅读，今日获取金币{rj.get("data").get("day_gold")}，剩余{self.remain}')
@@ -209,7 +232,7 @@ class HHYD():
         u='http://1692416143.3z2rpa.top/yunonline/v1/wtmpdomain'
         p=f'unionid={self.ysm_uid}'
         r=requests.post(u,headers=self.headers,data=p)
-        print(r.text)
+        printjson(r.text)
         rj=r.json()
         domain=rj.get('data').get('domain')
         pp = parse_qs(urlparse(domain).query)
@@ -237,7 +260,7 @@ class HHYD():
             u = f'https://nsr.zsf2023e458.cloud/yunonline/v1/do_read'
             r = requests.get(u, headers=info[1], params=self.params)
             print('-' * 50)
-            print(r.json())
+            printjson(r.json())
             rj = r.json()
             if rj.get('errcode') == 0:
                 link=rj.get('data').get('link')
@@ -248,7 +271,7 @@ class HHYD():
                     return False
                 if self.testCheck(a, wxlink) == False:
                     return False
-                print(f'this:{a[4]}|last:{self.lastbiz}')
+                printjson(f'this:{a[4]}|last:{self.lastbiz}')
                 if a[4]==self.lastbiz:
                     if self.testCheck(a, wxlink) == False:
                         return False
@@ -258,7 +281,7 @@ class HHYD():
                 time.sleep(tsm)
                 u1 = f'https://nsr.zsf2023e458.cloud/yunonline/v1/get_read_gold?uk={info[0]}&time={tsm}&timestamp={ts()}'
                 r1 = requests.get(u1, headers=info[1])
-                print(r1.text)
+                printjson(r1.text)
             elif rj.get('errcode') == 405:
                 print('阅读重复')
                 time.sleep(1.5)
@@ -301,9 +324,9 @@ class HHYD():
             'Cookie': f'ysm_uid={self.ysm_uid}',
         }
         r = requests.get(link, headers=h,allow_redirects=False)
-        print(r.status_code)
+        printjson(r.status_code)
         Location=r.headers.get('Location')
-        print(Location)
+        printjson(Location)
         return Location
     def withdraw(self):
         if int(self.remain)<self.txbz:
@@ -331,12 +354,15 @@ class HHYD():
             time.sleep(3)
             self.withdraw()
 if __name__ == '__main__':
-    appToken = 'xxx'  # 这个是填wxpusher的appToken
-    topicIds = 0  # 这个是wxpusher的topicIds改成你自己的
-    key = 'xxx'  # key从这里获取http://175.24.153.42:8882/getkey
+    printf = 0  # 打印调试日志0不打印，1打印，若运行异常请打开调试
+    appToken = 'xxxx'  # 这个是填wxpusher的appToken
+    topicIds = 4781  # 这个是wxpusher的topicIds改成你自己的
+    key = 'xxxx'  # key从这里获取http://175.24.153.42:8882/getkey
+    #txbz参数是满多少积分提现
     CKList=[
-        {'name':'备注','ysm_uid':'xxxx','txbz':3000}
+        {'name':'备注','ysm_uid':'xxxx','txbz':10000}
     ]
+    getmsg()
     for i in CKList:
         api=HHYD(i)
         api.run()

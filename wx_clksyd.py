@@ -30,6 +30,7 @@ gcc
 
 import requests
 import re
+import os
 import random
 import time
 from urllib.parse import urlparse, parse_qs
@@ -339,16 +340,16 @@ class WXYD:
 
 if __name__ == '__main__':
     printf = 0  # 打印调试日志0不打印，1打印，若运行异常请打开调试
-    authtoken = os.environ['wx_appToken']
-    topicIds = os.environ['wx_topicIds']
-    key = os.environ['wx_key']
-    authtoken = os.environ['wx_clksyd']
-    appToken = appToken  # 这个是填wxpusher的appToken
-    topicIds = topicIds  # 这个是wxpusher的topicIds改成你自己的
-    key = key  # key从这里获取http://175.24.153.42:8882/getkey
+    wx_appToken = os.environ['wx_appToken']
+    wx_topicIds = os.environ['wx_topicIds']
+    wx_key = os.environ['wx_key']
+    wx_clksyd = os.environ['wx_clksyd']
+    appToken = wx_appToken  # 这个是填wxpusher的appToken
+    topicIds = wx_topicIds  # 这个是wxpusher的topicIds改成你自己的
+    key = wx_key  # key从这里获取http://175.24.153.42:8882/getkey
     # 下边填authtoken，把xxxx替换成你的authtoken参数
     mycklist=[
-        {'authtoken': authtoken}
+        {'authtoken': wx_clksyd}
     ]
     for i in mycklist:
         api = WXYD(i)

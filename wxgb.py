@@ -2,7 +2,7 @@
 cron: 9 */1 * * *
 new Env('微信-钢镚');
 
-活动入口,微信打开：http://2478987.epghgkvalp.wjbk.25obcxyume.cloud/?p=2478987
+活动入口,微信打开：http://2567109.fhuuf.p0w87d3xn9gp.cloud/?p=2567109
 打开活动入口，抓包的任意接口cookies中的gfsessionid参数,
 填到脚本下方的,
 脚本下方的,

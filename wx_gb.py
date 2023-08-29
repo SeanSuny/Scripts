@@ -3,27 +3,27 @@ cron: 9 */1 * * *
 new Env('微信-钢镚');
 
 活动入口,微信打开：http://2567109.fhuuf.p0w87d3xn9gp.cloud/?p=2567109
+
 打开活动入口，抓包的任意接口cookies中的gfsessionid参数,
-填到脚本下方的,
-脚本下方的,
-脚本下方的 CKList配置中,把xxxx替换成你的gfsessionid参数
+青龙添加环境变量名称 ：wx_gb
+青龙添加环境变量参数 ：[{'gfsessionid': 'xxxx'}]
 单账户 CKList=[{'gfsessionid': 'xxxx'}]
 多账户CKList=[{'gfsessionid': 'xxxx'},{'gfsessionid': 'xxxx'},{'gfsessionid': 'xxxx'},]
 
-其他参数说明（脚本最下方填写参数）
-
 内置推送第三方 wxpusher（脚本最下方填写参数）
-appToken = 'xxx'  # 这个是填wxpusher的appToken
-topicIds = 0  # 这个是wxpusher的topicIds改成你自己的
-具体使用方法请看文档地址：https://wxpusher.zjiecode.com/docs/#/
+青龙添加环境变量名称 ：wx_pushconfig
+青龙添加环境变量参数 ：{"printf":0,"appToken":"xxxx","topicIds":4781,"key":"xxxx"}
+例如：{"printf":0,"appToken":"AT_r1vNXQdfgxxxxxscPyoORYg","topicIds":1234,"key":"642ae5f1xxxxx6d2334c"}
 
-回调服务器（脚本最下方填写参数）
-key=''这个是回调服务器的key
-key访问http://175.24.153.42:8882/getkey获取
+printf 0是不打印调试日志，1是打印调试日志
+appToken 这个是填wxpusher的appToken
+topicIds 这个是wxpusher的topicIds改成你自己的,在主题管理里能看到应用的topicIds 具体使用方法请看文档地址：https://wxpusher.zjiecode.com/docs/#/
+key 访问http://175.24.153.42:8882/getkey获取
 
 定时运行每小时一次
 达到标准自动提现
 '''
+import json
 import time
 import hashlib
 import requests
@@ -329,16 +329,33 @@ class HHYD():
 
 
 if __name__ == '__main__':
-    printf = 0  # 打印调试日志0不打印，1打印，若运行异常请打开调试
-    wx_appToken = os.environ['wx_appToken']
-    wx_topicIds = os.environ['wx_topicIds']
-    wx_key = os.environ['wx_key']
-    wx_gb = os.environ['wx_gb']
-    appToken = wx_appToken  # 这个是填wxpusher的appToken
-    topicIds = wx_topicIds  # 这个是wxpusher的topicIds改成你自己的
-    key = wx_key  # key从这里获取http://175.24.153.42:8882/getkey
-    CKList = wx_gb
+    pushconfig = os.getenv('wx_pushconfig')
+    if pushconfig==None:
+        print('请检查你的推送变量名称是否填写正确')
+        exit(0)
+    try:
+        pushconfig=json.loads(pushconfig.replace("'", '"'))
+    except Exception as e:
+        print(e)
+        print(pushconfig)
+        print('请检查你的推送变量参数是否填写正确')
+        exit(0)
+    wx_gb = os.getenv('wx_gb')
+    if wx_gb==None:
+        print('请检查你的钢镚脚本变量名称是否填写正确')
+        exit(0)
+    try:
+        wx_gb=json.loads(wx_gb.replace("'", '"'))
+    except Exception as e:
+        print(e)
+        print(wx_gb)
+        print('请检查你的钢镚脚本变量参数是否填写正确')
+        exit(0)
+    printf = pushconfig['printf']  # 打印调试日志0不打印，1打印，若运行异常请打开调试
+    appToken = pushconfig['appToken']  # 这个是填wxpusher的appToken
+    topicIds = pushconfig['topicIds']  # 这个是wxpusher的topicIds改成你自己的
+    key = pushconfig['key']  # key从这里获取http://175.24.153.42:8882/getkey
     getmsg()
-    for i in CKList:
+    for i in wx_gb:
         api = HHYD(i)
         api.run()

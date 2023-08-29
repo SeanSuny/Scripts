@@ -364,9 +364,7 @@ if __name__ == '__main__':
     topicIds = wx_topicIds  # 这个是wxpusher的topicIds改成你自己的
     key = wx_key  # key从这里获取http://175.24.153.42:8882/getkey
     #txbz参数是满多少积分提现
-    CKList=[
-        {'name':'备注','ysm_uid':wx_xyy,'txbz':10000}
-    ]
+    CKList = wx_xyy
     getmsg()
     for i in CKList:
         api=HHYD(i)

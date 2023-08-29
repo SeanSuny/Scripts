@@ -348,9 +348,7 @@ if __name__ == '__main__':
     topicIds = wx_topicIds  # 这个是wxpusher的topicIds改成你自己的
     key = wx_key  # key从这里获取http://175.24.153.42:8882/getkey
     # 下边填authtoken，把xxxx替换成你的authtoken参数
-    mycklist=[
-        {'authtoken': wx_clksyd}
-    ]
+    mycklist= wx_clksyd
     for i in mycklist:
         api = WXYD(i)
         api.run()

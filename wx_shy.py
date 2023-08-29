@@ -56,8 +56,7 @@ def push(title, link, text, type):
 <body>
 <p>TEXT</p><br>
 <p><a href="http://175.24.153.42:8882/lookstatus?key=KEY&type=TYPE">查看状态</a></p><br>
-<p><a href="LINK">阅读检测文章</a></p><br>
-<p><a href="http://175.24.153.42:8882/setstatus?key=KEY&type=TYPE&val=0">阅读完成确认</a></p><br>
+<p><a href="http://175.24.153.42:8882/lookwxarticle?key=KEY&type=TYPE&wxurl=LINK">点击阅读检测文章</a></p><br>
 </body>
 </html>
     '''

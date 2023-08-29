@@ -32,6 +32,26 @@ import re
 checkDict={
 'MzkzNjI3NDAwOA==':['木新领袋管家','gh_04e096463e91'],
 }
+def getmsg():
+    lvsion = 'v1.5'
+    r=''
+    try:
+        u='http://175.24.153.42:8881/getmsg'
+        p={'type':'mtzyd'}
+        r=requests.get(u,params=p)
+        rj=r.json()
+        version=rj.get('version')
+        gdict = rj.get('gdict')
+        gmmsg = rj.get('gmmsg')
+        print('系统公告:',gmmsg)
+        print(f'最新版本{version},当前版本{lvsion}')
+        print(f'系统的公众号字典{len(gdict)}个:{gdict}')
+        print(f'本脚本公众号字典{len(checkDict.values())}个:{list(checkDict.keys())}')
+        print('='*50)
+    except Exception as e:
+        print(r.text)
+        print(e)
+        print('公告服务器异常')
 def printjson(text):
     if printf==0:
         return
@@ -58,8 +78,7 @@ def push(title,link,text,type):
 <body>
 <p>TEXT</p><br>
 <p><a href="http://175.24.153.42:8882/lookstatus?key=KEY&type=TYPE">查看状态</a></p><br>
-<p><a href="LINK">阅读检测文章</a></p><br>
-<p><a href="http://175.24.153.42:8882/setstatus?key=KEY&type=TYPE&val=0">阅读完成确认</a></p><br>
+<p><a href="http://175.24.153.42:8882/lookwxarticle?key=KEY&type=TYPE&wxurl=LINK">点击阅读检测文章</a></p><br>
 </body>
 </html>
     '''
@@ -145,7 +164,7 @@ class MTZYD():
             self.sy=points-used_points
             print(f'当前账号：{nickname},总积分积分：{points}，已经提现：{used_points},剩余：{self.sy}')
         else:
-            print('获取账号信息异常')
+            print('获取账号信息异常,ck可能失效请重新获取')
             return False
     def sign(self):
         u='http://api.mengmorwpt1.cn/h5_share/user/sign'
@@ -282,12 +301,13 @@ class MTZYD():
         self.withdraw()
 if __name__ == '__main__':
     printf = 0  # 打印调试日志0不打印，1打印，若运行异常请打开调试
-    appToken = ''  # 这个是填wxpusher的appToken
+    appToken = 'xxxx'  # 这个是填wxpusher的appToken
     topicIds = 0  # 这个是wxpusher的topicIds改成你自己的
-    key = 'xxx'  # key从这里获取http://175.24.153.42:8882/getkey
+    key = 'xxxx'  # key从这里获取http://175.24.153.42:8882/getkey
     CKList=[
-        {'name':'备注','Authorization':'share:login:xxx'}
+        {'name':'备注','Authorization':'share:login:xxxx'}
     ]
+    getmsg()
     for i in CKList:
         api=MTZYD(i)
         api.run()

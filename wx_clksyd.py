@@ -3,6 +3,7 @@ cron: */30 * * * *
 new Env('微信-从零开始阅读');
 
 活动入口,微信打开：https://entry-1318684421.cos.ap-nanjing.myqcloud.com/cos_b.html?openId=oiDdr563TOZlmaRzrEPgBIM_n6DQ
+
 打开活动入口，抓包的任意接口cookies中的authtoken参数,
 青龙添加环境变量名称 ：wx_clksyd
 青龙添加环境变量参数 ：[{'authtoken': 'xxxx'}]
@@ -354,14 +355,14 @@ if __name__ == '__main__':
         exit(0)
     wx_clksyd = os.getenv('wx_clksyd')
     if wx_clksyd==None:
-        print('请检查你的美添赚脚本变量名称是否填写正确')
+        print('请检查你的从零开始阅读脚本变量名称是否填写正确')
         exit(0)
     try:
         wx_clksyd=json.loads(wx_clksyd.replace("'", '"'))
     except Exception as e:
         print(e)
         print(wx_clksyd)
-        print('请检查你的美添赚脚本变量参数是否填写正确')
+        print('请检查你的从零开始阅读脚本变量参数是否填写正确')
         exit(0)
     printf = pushconfig['printf']  # 打印调试日志0不打印，1打印，若运行异常请打开调试
     appToken = pushconfig['appToken']  # 这个是填wxpusher的appToken

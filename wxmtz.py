@@ -1,6 +1,6 @@
 '''
 cron: 3 */1 * * *
-new Env('微信美添赚');
+new Env('微信-美添赚');
 
 活动入口,微信打开：http://tg.1693182678.api.mengmorwpt2.cn/h5_share/ads/tg?user_id=115772
 活动入口,微信打开：http://tg.1693182678.api.mengmorwpt2.cn/h5_share/ads/tg?user_id=115772

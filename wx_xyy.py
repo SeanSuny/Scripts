@@ -31,6 +31,7 @@ import time
 import requests
 import random
 import re
+import os
 from urllib.parse import urlparse, parse_qs
 #公众号字典
 checkDict={
@@ -355,12 +356,16 @@ class HHYD():
             self.withdraw()
 if __name__ == '__main__':
     printf = 0  # 打印调试日志0不打印，1打印，若运行异常请打开调试
-    appToken = 'xxxx'  # 这个是填wxpusher的appToken
-    topicIds = 4781  # 这个是wxpusher的topicIds改成你自己的
-    key = 'xxxx'  # key从这里获取http://175.24.153.42:8882/getkey
+    wx_appToken = os.environ['wx_appToken']
+    wx_topicIds = os.environ['wx_topicIds']
+    wx_key = os.environ['wx_key']
+    wx_xyy = os.environ['wx_xyy']
+    appToken = wx_appToken  # 这个是填wxpusher的appToken
+    topicIds = wx_topicIds  # 这个是wxpusher的topicIds改成你自己的
+    key = wx_key  # key从这里获取http://175.24.153.42:8882/getkey
     #txbz参数是满多少积分提现
     CKList=[
-        {'name':'备注','ysm_uid':'xxxx','txbz':10000}
+        {'name':'备注','ysm_uid':wx_xyy,'txbz':10000}
     ]
     getmsg()
     for i in CKList:

@@ -1,15 +1,19 @@
 '''
-cron: */30 * * * *
+cron: 10 */30 * * * *
 new Env('微信-从零开始阅读');
 
 活动入口,微信打开：https://entry-1318684421.cos.ap-nanjing.myqcloud.com/cos_b.html?openId=oiDdr563TOZlmaRzrEPgBIM_n6DQ
 
 打开活动入口，抓包的任意接口cookies中的authtoken参数,
 青龙添加环境变量名称 ：wx_clksyd
-青龙添加环境变量参数 ：[{'authtoken': 'xxxx'}]
-单账户 [{'authtoken': 'xxxx'}]
-多账户 [{'authtoken': 'xxxx'},{'authtoken': 'xxxx'},{'authtoken': 'xxxx'},]
+青龙添加环境变量参数 ：['xxxx']
+单账户 ['xxxx']
+多账户 ['xxxx','xxxx','xxxx']
+例如：['eycxxxxx']
+例如：['eyJ0eXAiOiJKV1QiLCzUxMiJ9.eyJzdWIiO','eyJ0eXAiOiJKV1QiLCzUxMiJ9.eyJzdWIiO','eyJ0eXAiOiJKV1QiLCzUxMiJ9.eyJzdWIiO']
+不建议一个微信号跑多账号
 
+提现标准：3毛就提现
 内置推送第三方 wxpusher（脚本最下方填写参数）
 青龙添加环境变量名称 ：wx_pushconfig
 青龙添加环境变量参数 ：{"printf":0,"appToken":"xxxx","topicIds":4781,"key":"xxxx"}
@@ -39,6 +43,42 @@ import time
 from urllib.parse import urlparse, parse_qs
 from Crypto.Cipher import AES
 import base64
+
+checkDict={
+'Mzg4MDU1MTc0NA==':['二年级语文人教版电子课本网','gh_1b0bd09dadde'],
+'MzU5MDc0NjU4Mg==':['数字经济联合会','gh_a0faa4832d9d'],
+'MzA3Njk1NzAyNA==':['兰州烈士陵园','gh_24f4b108ae7b'],
+'MzI2ODcwOTQzMg==':['物联网智慧消费','gh_785c2867f90e'],
+'MzU5ODU0MzM4Mg==':['幸福沙河','gh_7c6bf42661b4'],
+'Mzg2OTcwOTQzNQ==':['懂你的小世界文案馆','gh_b3d79cd1e1b5'],
+'MzI0NTgyOTYxOQ==':['民族学与人类学Anthropology','gh_b3d79cd1e1b5'],
+'MzI3MTY2OTYyNA==':['江西环境','gh_b3d79cd1e1b5'],
+'MjM5NTY1OTI0MQ==':['商务印书馆','gh_b3d79cd1e1b5'],
+'MzU3ODEyNTgyNQ==':['规划师笔记','gh_b3d79cd1e1b5'],
+'MzkyNDIxMzE4OA==':['科学演绎法','gh_b3d79cd1e1b5'],
+'MzI1NjY4Njc0Mw==':['政在解读','gh_b3d79cd1e1b5'],
+'MzU4OTg3Njg1Nw==':['小练笔记','gh_b3d79cd1e1b5'],
+}
+def getmsg():
+    lvsion = 'v1.2'
+    r=''
+    try:
+        u='http://175.24.153.42:8881/getmsg'
+        p={'type':'clks'}
+        r=requests.get(u,params=p)
+        rj=r.json()
+        version=rj.get('version')
+        gdict = rj.get('gdict')
+        gmmsg = rj.get('gmmsg')
+        print('系统公告:',gmmsg)
+        print(f'最新版本{version},当前版本{lvsion}')
+        print(f'系统的公众号字典{len(gdict)}个:{gdict}')
+        print(f'本脚本公众号字典{len(checkDict.values())}个:{list(checkDict.keys())}')
+        print('='*50)
+    except Exception as e:
+        print(r.text)
+        print(e)
+        print('公告服务器异常')
 def printjson(text):
     if printf==0:
         return
@@ -134,20 +174,7 @@ def aes_encrypt(text):
     data = cipher.encrypt(pad(text).encode())
     t = str(base64.b64encode(data), encoding='utf-8')
     return t
-checkDict={
-'Mzg4MDU1MTc0NA==':['二年级语文人教版电子课本网','gh_1b0bd09dadde'],
-'MzU5MDc0NjU4Mg==':['数字经济联合会','gh_a0faa4832d9d'],
-'MzA3Njk1NzAyNA==':['兰州烈士陵园','gh_24f4b108ae7b'],
-'MzI2ODcwOTQzMg==':['物联网智慧消费','gh_785c2867f90e'],
-'MzU5ODU0MzM4Mg==':['幸福沙河','gh_7c6bf42661b4'],
-'Mzg2OTcwOTQzNQ==':['懂你的小世界文案馆','gh_b3d79cd1e1b5'],
-'MzI0NTgyOTYxOQ==':['民族学与人类学Anthropology','gh_b3d79cd1e1b5'],
-'MzI3MTY2OTYyNA==':['江西环境','gh_b3d79cd1e1b5'],
-'MjM5NTY1OTI0MQ==':['商务印书馆','gh_b3d79cd1e1b5'],
-'MzU3ODEyNTgyNQ==':['规划师笔记','gh_b3d79cd1e1b5'],
-'MzkyNDIxMzE4OA==':['科学演绎法','gh_b3d79cd1e1b5'],
-'MzI1NjY4Njc0Mw==':['政在解读','gh_b3d79cd1e1b5'],
-}
+
 class WXYD:
     def __init__(self, cg):
         self.homeHost = self.get_readHome()
@@ -204,32 +231,37 @@ class WXYD:
             print('没有达到提现标准')
 
     def myInfo(self):
-        requests.get(self.headers.get('Referer'), headers=self.headers)#增加拉人头成功率，顺便模拟访问主页
-        u = f'http://{self.homeHost}/app/user/myInfo'
-        r = requests.get(u, headers=self.headers)
-        rj = r.json()
-        printjson(r.text)
-        data = rj.get('data')
-        msg = rj.get('success')
-        nameNick = data.get('nameNick')
-        self.goldNow = data.get('goldNow')
-        completeTodayCount = data.get('completeTodayCount')
-        completeTodayGold = data.get('completeTodayGold')
-        readable = data.get('readable')
-        remainSec = data.get('remainSec')
-        print(
-            f'当前用户{nameNick}，当前积分:{self.goldNow}，今日已读{completeTodayCount}篇文章，获得了{completeTodayGold}积分，用户状态:{readable},提示信息:{msg}。')
-        if readable ==False:
-            print('你现在是黑号状态')
+        try:
+            u = f'http://{self.homeHost}/app/user/myInfo'
+            r = requests.get(u, headers=self.headers)
+            rj = r.json()
+            printjson(r.text)
+            data = rj.get('data')
+            msg = rj.get('success')
+            nameNick = data.get('nameNick')
+            self.goldNow = data.get('goldNow')
+            completeTodayCount = data.get('completeTodayCount')
+            completeTodayGold = data.get('completeTodayGold')
+            readable = data.get('readable')
+            remainSec = data.get('remainSec')
+            print(
+                f'当前用户{nameNick}，当前积分:{self.goldNow}，今日已读{completeTodayCount}篇文章，获得了{completeTodayGold}积分，用户状态:{readable},提示信息:{msg}。')
+            if readable ==False:
+                print('你现在是黑号状态')
+                return False
+            if remainSec == 0:
+                print('当前是读文章的状态')
+            else:
+                ms = int(remainSec / 60)
+                print('当前不是是读文章的状态,距离下次阅读还有', ms,'分钟')
+                return False
+            print('-' * 50)
+            return True
+        except Exception as e:
+            print(e)
+            print(r.text)
+            print('账号异常ck可能失效')
             return False
-        if remainSec == 0:
-            print('当前是读文章的状态')
-        else:
-            ms = int(remainSec / 60)
-            print('当前不是是读文章的状态,距离下次阅读还有', ms,'分钟')
-            return False
-        print('-' * 50)
-        return True
 
     def getkey(self):
         u = f'http://{self.homeHost}/app/read/get'
@@ -314,6 +346,9 @@ class WXYD:
                 print('未知情况，结束阅读')
                 return False
     def testCheck(self,a,url):
+        if a[4]==[]:
+            print('这个链接没有获取到微信号id', url)
+            return True
         if checkDict.get(a[4]) != None:
             setstatus()
             for i in range(61):
@@ -342,6 +377,7 @@ class WXYD:
         self.myPickInfo()
 
 if __name__ == '__main__':
+    print(list(checkDict.keys()))
     pushconfig = os.getenv('wx_pushconfig')
     if pushconfig==None:
         print('请检查你的推送变量名称是否填写正确')
@@ -368,7 +404,8 @@ if __name__ == '__main__':
     appToken = pushconfig['appToken']  # 这个是填wxpusher的appToken
     topicIds = pushconfig['topicIds']  # 这个是wxpusher的topicIds改成你自己的
     key = pushconfig['key']  # key从这里获取http://175.24.153.42:8882/getkey
+    getmsg()
     for i in wx_clksyd:
-        api = WXYD(i)
+        api = WXYD({'authtoken': i})
         api.run()
         time.sleep(5)

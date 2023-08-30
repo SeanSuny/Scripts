@@ -48,7 +48,7 @@ checkDict={
 'Mzg5MDgxODAzMg==':['北北小助手','gh_58d7ee593b86'],
 }
 def getmsg():
-    lvsion = 'v1.1'
+    lvsion = 'v1.2'
     r=''
     try:
         u='http://175.24.153.42:8881/getmsg'
@@ -200,7 +200,7 @@ class HHYD():
                 printjson(r.json())
                 return True
             else:
-                print(f'获取用户信息失败，账号异常')
+                print(f'获取用户信息失败，账号异常，请查看你的账号是否正常')
                 return False
         except:
             print(r.text)
@@ -237,7 +237,7 @@ class HHYD():
         pp = parse_qs(urlparse(domain).query)
         hn = urlparse(domain).netloc
         uk = pp.get('uk')[0]
-        print('get key is ', uk)
+        printjson(f'get ydkey is {uk}')
         h = {
             'Host': 'nsr.zsf2023e458.cloud',
             'Connection': 'keep-alive',
@@ -291,6 +291,9 @@ class HHYD():
                 print('未知情况')
                 time.sleep(1.5)
     def testCheck(self,a,url):
+        if a[4] == []:
+            print('这个链接没有获取到微信号id', url)
+            return True
         if checkDict.get(a[4]) != None:
             setstatus()
             for i in range(60):
@@ -329,7 +332,7 @@ class HHYD():
         return Location
     def withdraw(self):
         if int(self.remain)<self.txbz:
-            print('没有达到提前标准')
+            print('没有达到提现标准')
             return False
         gold=int(int(self.remain)/1000)*1000
         print('本次提现金币',gold)
@@ -381,5 +384,5 @@ if __name__ == '__main__':
     key = pushconfig['key']  # key从这里获取http://175.24.153.42:8882/getkey
     getmsg()
     for i in wx_xyy:
-        api=HHYD(i)
+        api=HHYD({'ysm_uid':i,'txbz':10000})#这里的10000是默认提现标准，代表满10000提现，你也可以改成其他的例如3000
         api.run()

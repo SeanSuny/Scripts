@@ -6,9 +6,11 @@ new Env('微信-小阅阅');
 
 打开活动入口，抓包的任意接口cookies中的ysm_uid参数,
 青龙添加环境变量名称 ：wx_xyy
-青龙添加环境变量参数 ：[{'ysm_uid': 'xxxx'}]
-单账户 [{'ysm_uid': 'xxxx'}]
-多账户 [{'ysm_uid': 'xxxx'},{'ysm_uid': 'xxxx'},{'ysm_uid': 'xxxx'},]
+青龙添加环境变量参数 ：['xxxx']
+单账户 ['xxxx']
+多账户 ['xxxx','xxxx','xxxx',]
+例如：['729ac1356xxxxb7407bd2ea']
+例如：['123456','djvnffff','xxxxx',]
 
 内置推送第三方 wxpusher（脚本最下方填写参数）
 青龙添加环境变量名称 ：wx_pushconfig

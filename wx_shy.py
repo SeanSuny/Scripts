@@ -6,20 +6,30 @@ new Env('微信-三合一阅读');
 花花阅读：http://mr1693299196424.fgrtlkg.cn/user/index.html?mid=CG5RVPQKU
 元宝阅读：http://mr1693299224410.kgtpecv.cn/coin/index.html?mid=CX6EPSR2K
 
-打开三个任一活动入口，抓包的任意接口cookies中的un,token参数,
+http://u.cocozx.cn/api/user/info
+抓包 info接口的请求体中的un和token参数
+
 青龙添加环境变量名称 ：wx_shy
 青龙添加环境变量参数 ：[{'un': 'xxxx', 'token': 'xxxx'}]
 单账户 [{'un': 'xxxx', 'token': 'xxxx'}]
 多账户 [{'un': 'xxxx', 'token': 'xxxx'},{'un': 'xxxx', 'token': 'xxxx'},{'un': 'xxxx', 'token': 'xxxx'},]
+提现标准默认是10000
 
 内置推送第三方 wxpusher（脚本最下方填写参数）
 青龙添加环境变量名称 ：wx_pushconfig
 青龙添加环境变量参数 ：{"printf":0,"appToken":"xxxx","topicIds":4781,"key":"xxxx"}
 例如：{"printf":0,"appToken":"AT_r1vNXQdfgxxxxxscPyoORYg","topicIds":1234,"key":"642ae5f1xxxxx6d2334c"}
 
+printf 0是不打印调试日志，1是打印调试日志
 appToken 这个是填wxpusher的appToken
 topicIds 这个是wxpusher的topicIds改成你自己的,在主题管理里能看到应用的topicIds 具体使用方法请看文档地址：https://wxpusher.zjiecode.com/docs/#/
 key 访问http://175.24.153.42:8882/getkey获取
+定时运行每15分钟一次
+
+默认每个时间段跑一个，若要修改，到脚本下方代码修改
+#7-11点跑元宝，11到13点跑星空，14到17点跑花花
+达到标准自动提现
+达到标准，自动提现
 '''
 import requests
 import json
@@ -32,7 +42,30 @@ import datetime
 checkDict = {
     'Mzg2Mzk3Mjk5NQ==': ['wz', ''],
 }
-
+def getmsg():
+    lvsion = 'v1.0'
+    r=''
+    try:
+        u='http://175.24.153.42:8881/getmsg'
+        p={'type':'ybxkhh'}
+        r=requests.get(u,params=p)
+        rj=r.json()
+        version=rj.get('version')
+        gdict = rj.get('gdict')
+        gmmsg = rj.get('gmmsg')
+        print('系统公告:',gmmsg)
+        print(f'最新版本{version}当前版本{lvsion}')
+        print(f'系统的公众号字典{len(gdict)}个:{gdict}')
+        print(f'本脚本公众号字典{len(checkDict.values())}个:{list(checkDict.keys())}')
+        print('='*50)
+    except Exception as e:
+        print(r.text)
+        print(e)
+        print('公告服务器异常')
+def printjson(text):
+    if printf==0:
+        return
+    print(text)
 
 def push(title, link, text, type):
     str1 = '''<!DOCTYPE html>
@@ -71,7 +104,8 @@ def push(title, link, text, type):
     urlpust = 'http://wxpusher.zjiecode.com/api/send/message'
     try:
         p = requests.post(url=urlpust, json=datapust).text
-        print(p)
+        printjson(p)
+        print('推送成功')
         return True
     except:
         print('推送失败！')
@@ -131,7 +165,6 @@ class WXYD:
         self.token = cg.get('token')
         self.headers = {
             'Host': 'u.cocozx.cn',
-            'Connection': 'keep-alive',
             'Accept': 'application/json, text/javascript, */*; q=0.01',
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 NetType/WIFI MicroMessenger/7.0.20.1781(0x6700143B) WindowsWechat(0x63090621) XWEB/8351 Flue',
             'Content-Type': 'application/json; charset=UTF-8',
@@ -323,18 +356,20 @@ if __name__ == '__main__':
         exit(0)
     wx_shy = os.getenv('wx_shy')
     if wx_shy==None:
-        print('请检查你的三合一阅读脚本变量名称是否填写正确')
+        print('请检查你的星空花花元宝脚本变量名称是否填写正确')
         exit(0)
     try:
         wx_shy=json.loads(wx_shy.replace("'", '"'))
     except Exception as e:
         print(e)
         print(wx_shy)
-        print('请检查你的三合一阅读脚本变量参数是否填写正确')
+        print('请检查你的星空花花元宝脚本变量参数是否填写正确')
         exit(0)
+    printf = pushconfig['printf']
     appToken = pushconfig['appToken']  # 这个是填wxpusher的appToken
     topicIds = pushconfig['topicIds']  # 这个是wxpusher的topicIds改成你自己的
     key = pushconfig['key']  # key从这里获取http://175.24.153.42:8882/getkey
+    getmsg()
     #10-13点跑元宝，14到16点跑星空，17到19点跑花花
     h = datetime.datetime.now().hour
     bzl = []
@@ -345,8 +380,9 @@ if __name__ == '__main__':
     elif 17 <= h <= 19:
         bzl = ['user']
     else:
+        print('不在设置的时间段')
         exit(0)
-    #去除下方这一行代码的井号，将不限制时间
+    #去除下方这一行代码的井号，将同时跑任务，大概率同时黑号
     #bzl = ['user','ox','coin']
     for bz in bzl:
         print('=' * 50)

@@ -7,7 +7,7 @@
 # Wxpusher获取UID: https://wxpusher.zjiecode.com/demo/
 # 变量名 wx_clksyd 示例: {"ck":"这里是cookie中authtoken的值","ts":"这里是推送Wxpusher获取UID"}
 # 变量名 wx_clksyd 企业微信 示例: {"ck":"这里是cookie中authtoken的值","qw":"这里是推送企业微信机器人Key"}
-# 入口：https://entry-1318684421.cos.ap-nanjing.myqcloud.com/cos_b.html?openId=oiDdr5xiVUIwNQVvj1sADz2rb5Mg
+# 入口：https://entry-1318684421.cos.ap-nanjing.myqcloud.com/cos_b.html?openId=oiDdr563TOZlmaRzrEPgBIM_n6DQ
 import requests
 #加密
 from Crypto.Cipher import AES

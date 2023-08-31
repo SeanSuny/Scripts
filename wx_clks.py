@@ -1,6 +1,6 @@
 # Author: lindaye
 # V1.1.6
-# 2023.8.31 14:00更新:
+# 2023.8.31 19:00更新:
 #   1.改为变量ck,一行一个ck示例
 #   2.采用Wxpusher进行推送服务(手动过检测),仅需扫码获取UID,无需其他操作
 #   3.企业微信机器人/Wxpusher (二选一)
@@ -54,6 +54,12 @@ checkDict=[
 'MzU3ODEyNTgyNQ==',
 'MzkyNDIxMzE4OA==',
 'MzI1NjY4Njc0Mw==',
+"MzU4OTg3Njg1Nw==",
+"MzkyMjExNzE1Ng==",
+'MzA5MzE1ODI4NQ==', # 新增
+'MzAxMDEyODg2MA==',
+'MzI4MTAzODE5NA==',
+"Mzg3MTgyOTgyMw==",
 ]
 
 
@@ -107,7 +113,7 @@ def get_myinfo(url):
 def do_read(u):
     result = ss.get(f'https://sss.mvvv.fun/app/task/doRead?u={u}&type=1',headers=headers).json()['data']
     if result['bizCode'] !=0:
-        tips = {20:'文章正在补充中，稍后再试',30:'下批文章将在24小时后到来',10:'下批文章将在60分钟后到达',11:'当天达到上限'}
+        tips = {20:'文章正在补充中，稍后再试',30:'下批文章将在24小时后到来',10:'本轮阅读已完成',11:'当天达到上限'}
         print(tips[result['bizCode']])
     else:
         check_num = 0
@@ -116,7 +122,12 @@ def do_read(u):
                 taskKey = result['taskKey']
                 taskUrl = result['taskUrl']
                 # 获取biz
-                biz = re.findall("biz=(.*?)&amp;",ss.get(taskUrl).text)[0]
+                biz = re.findall("biz=(.*?)&amp;",ss.get(taskUrl).text)
+                if biz == []:
+                    biz = None
+                    print(f"获取biz异常:{taskUrl}")
+                else:
+                    biz = biz[0]
                 print(f"阅读任务ID({biz}): {taskKey}")
                 s = random.randint (10 ,12 )
                 print(f"随机阅读 {s} 秒")
@@ -129,10 +140,6 @@ def do_read(u):
                         time.sleep(5)
                         url = f'https://sss.mvvv.fun/app/task/doRead?u={u}&type=1&key={taskKey}'
                         result = ss.get(url,headers=headers).json()['data']
-                        if result['bizCode'] == 0:
-                            print(f"阅读结果: {result['detail']}")
-                        else:
-                            print(f"阅读失败: {result}")
                     else:
                         print("检测文章-过检测失败啦!")
                         break
@@ -140,10 +147,18 @@ def do_read(u):
                     time.sleep(s)
                     url = f'https://sss.mvvv.fun/app/task/doRead?u={u}&type=1&key={taskKey}'
                     result = ss.get(url,headers=headers).json()['data']
-                    if result['bizCode'] == 0:
-                        print(f"阅读结果: {result['detail']}")
-                    else:
-                        print(f"阅读失败: {result}")
+                    if result['bizCode'] == 31:
+                        print(f"未收录biz: {biz} 检测结果: {result['detail']}")
+                        break
+                if result['bizCode'] == 0:
+                    print(f"阅读结果: {result['detail']}")
+                elif result['bizCode'] == 31:
+                    print(f"检测结果: {result['detail']}")
+                    result = ss.get(f'https://sss.mvvv.fun/app/task/doRead?u={u}&type=1',headers=headers).json()['data']
+                else:
+                    tips = {20:'文章正在补充中，稍后再试',30:'下批文章将在24小时后到来',10:'本轮阅读已完成',11:'当天达到上限'}
+                    print(tips[result['bizCode']])
+                    break
             else:
                 print("获取到多次检测文章-已自动停止防止黑号,请手动去处理!")
                 break

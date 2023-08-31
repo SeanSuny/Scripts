@@ -7,9 +7,9 @@
 # Wxpusher获取UID: https://wxpusher.zjiecode.com/demo/
 # 变量名 wx_shy 示例: {"un":"这里是cookie的un值","token":"这里是cookie的token值","ts":"这里推送Wxpusher获取UID"}
 # 变量名 wx_shy 企业微信 示例: {"un":"这里是cookie的un值","token":"这里是cookie的token值","qw":"这里是推送企业微信机器人Key"}
-# http://mr1693464627736.zppnplq.cn/coin/index.html?mid=CR42F6WUF 【元宝阅读】看文章赚零花钱，全新玩法，提现秒到(若链接打不开，可复制到手机浏览器里打开)
-# http://mr1693464650323.rikybod.cn/ox/index.html?mid=RG7UUSYFS 【星空阅读】看文章赚零花钱，全新玩法，提现秒到(若链接打不开，可复制到手机浏览器里打开)
-# http://mr1693464671933.ennvjtb.cn/user/index.html?mid=D33C7W3A3 【花花阅读】看文章赚零花钱，全新玩法，提现秒到(若链接打不开，可复制到手机浏览器里打开)
+# http://mr1693299224410.kgtpecv.cn/coin/index.html?mid=CX6EPSR2K 【元宝阅读】看文章赚零花钱，全新玩法，提现秒到(若链接打不开，可复制到手机浏览器里打开)
+# http://mr1693299085764.onzrxjs.cn/ox/index.html?mid=3K4T7ZWR6   【星空阅读】看文章赚零花钱，全新玩法，提现秒到(若链接打不开，可复制到手机浏览器里打开)
+# http://mr1693299196424.fgrtlkg.cn/user/index.html?mid=CG5RVPQKU 【花花阅读】看文章赚零花钱，全新玩法，提现秒到(若链接打不开，可复制到手机浏览器里打开)
 import requests
 import re
 import time

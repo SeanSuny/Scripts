@@ -7,7 +7,7 @@
 # Wxpusher获取UID: https://wxpusher.zjiecode.com/demo/
 # 变量名 wx_czgm Wxpusher 示例: {"ck":"这里是cookie中gfsessionid的值","ts":"这里是推送Wxpusher获取UID"}
 # 变量名 wx_czgm 企业微信 示例: {"ck":"这里是cookie中gfsessionid的值","qw":"这里是推送企业微信机器人Key"}
-# 入口：http://2496831.qz2hkanpfw.orut03cj0o2p.cloud/?p=2496831
+# 入口：http://2567109.fhuuf.p0w87d3xn9gp.cloud/?p=2567109
 import re
 import time
 import hashlib

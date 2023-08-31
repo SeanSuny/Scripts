@@ -8,9 +8,9 @@ new Env('微信-小阅阅');
 青龙添加环境变量名称 ：wx_xyy
 青龙添加环境变量参数 ：['xxxx']
 单账户 ['xxxx']
-多账户 ['xxxx','xxxx','xxxx',]
+多账户 ['xxxx','xxxx','xxxx']
 例如：['729ac1356xxxxb7407bd2ea']
-例如：['123456','djvnffff','xxxxx',]
+例如：['123456','djvnffff','xxxxx']
 
 内置推送第三方 wxpusher（脚本最下方填写参数）
 青龙添加环境变量名称 ：wx_pushconfig
@@ -50,7 +50,7 @@ checkDict={
 'Mzg5MDgxODAzMg==':['北北小助手','gh_58d7ee593b86'],
 }
 def getmsg():
-    lvsion = 'v1.2'
+    lvsion = 'v1.3'
     r=''
     try:
         u='http://175.24.153.42:8881/getmsg'
@@ -61,9 +61,13 @@ def getmsg():
         gdict = rj.get('gdict')
         gmmsg = rj.get('gmmsg')
         print('系统公告:',gmmsg)
-        print(f'最新版本{version},当前版本{lvsion}')
+        print(f'最新版本{version}当前版本{lvsion}')
         print(f'系统的公众号字典{len(gdict)}个:{gdict}')
         print(f'本脚本公众号字典{len(checkDict.values())}个:{list(checkDict.keys())}')
+        s=len(gdict)
+        l=len(checkDict.values())
+        if s>l:
+            print(f'新增了{s-l}个过检测字典，快手动去脚本的checkDict里添加吧')
         print('='*50)
     except Exception as e:
         print(r.text)
@@ -164,7 +168,6 @@ class HHYD():
         self.txbz=cg["txbz"]
         self.headers={
             'Host': '1692416143.3z2rpa.top',
-            'Connection': 'keep-alive',
             'Accept': 'application/json, text/javascript, */*; q=0.01',
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 NetType/WIFI MicroMessenger/7.0.20.1781(0x6700143B) WindowsWechat(0x63090621) XWEB/8351 Flue',
             'X-Requested-With': 'XMLHttpRequest',
@@ -242,7 +245,6 @@ class HHYD():
         printjson(f'get ydkey is {uk}')
         h = {
             'Host': 'nsr.zsf2023e458.cloud',
-            'Connection': 'keep-alive',
             'Accept': 'application/json, text/javascript, */*; q=0.01',
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 NetType/WIFI MicroMessenger/7.0.20.1781(0x6700143B) WindowsWechat(0x63090621) XWEB/8351 Flue',
             'Origin': f'https://{hn}',
@@ -319,7 +321,6 @@ class HHYD():
         hn = urlparse(link).netloc
         h={
             'Host': hn,
-            'Connection': 'keep-alive',
             'Upgrade-Insecure-Requests': '1',
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 NetType/WIFI MicroMessenger/7.0.20.1781(0x6700143B) WindowsWechat(0x63090621) XWEB/8351 Flue',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
@@ -359,6 +360,7 @@ class HHYD():
             self.withdraw()
 if __name__ == '__main__':
     pushconfig = os.getenv('wx_pushconfig')
+    print(pushconfig)
     if pushconfig==None:
         print('请检查你的推送变量名称是否填写正确')
         exit(0)

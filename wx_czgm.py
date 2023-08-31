@@ -1,15 +1,17 @@
 '''
 cron: 9 */1 * * *
-new Env('微信-钢镚');
+new Env('微信-充值购买');
 
 活动入口,微信打开：http://2567109.fhuuf.p0w87d3xn9gp.cloud/?p=2567109
 
 打开活动入口，抓包的任意接口cookies中的gfsessionid参数,
-青龙添加环境变量名称 ：wx_gb
-青龙添加环境变量参数 ：[{'gfsessionid': 'xxxx'}]
-单账户 [{'gfsessionid': 'xxxx'}]
-多账户 [{'gfsessionid': 'xxxx'},{'gfsessionid': 'xxxx'},{'gfsessionid': 'xxxx'},]
-
+青龙添加环境变量名称 ：wx_czgm
+青龙添加环境变量参数 ：['xxxx']
+单账户 ['xxxx']
+多账户 ['xxxx','xxxx','xxxx']
+例如：['729ac1356xxxxb7407bd2ea']
+例如：['123456','djvnffff','xxxxx']
+提现标准默认是10000，与需要修改，请在本脚本最下方，按照提示修改
 内置推送第三方 wxpusher（脚本最下方填写参数）
 青龙添加环境变量名称 ：wx_pushconfig
 青龙添加环境变量参数 ：{"printf":0,"appToken":"xxxx","topicIds":4781,"key":"xxxx"}
@@ -43,8 +45,8 @@ checkDict = {
 
 
 def getmsg():
-    lvsion = 'v1.1'
-    r = ''
+    lvsion = 'v1.2'
+    r=''
     try:
         u = 'http://175.24.153.42:8881/getmsg'
         p = {'type': 'czgm'}
@@ -54,7 +56,7 @@ def getmsg():
         gdict = rj.get('gdict')
         gmmsg = rj.get('gmmsg')
         print('系统公告:', gmmsg)
-        print(f'最新版本{version},当前版本{lvsion}')
+        print(f'最新版本{version}当前版本{lvsion}')
         print(f'系统的公众号字典{len(gdict)}个:{gdict}')
         print(f'本脚本公众号字典{len(checkDict.values())}个:{list(checkDict.keys())}')
         print('=' * 50)
@@ -265,7 +267,8 @@ class HHYD():
             self.msg()
             ts = int(time.time())
             finish_headers = self.sec.headers.copy()
-            finish_headers.update({'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8', 'Origin': 'http://2478987.jilixczlz.ix47965in5.cloud'})
+            finish_headers.update({'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+                                   'Origin': 'http://2478987.jilixczlz.ix47965in5.cloud'})
             text = f'key=4fck9x4dqa6linkman3ho9b1quarto49x0yp706qi5185o&time={ts}'
             sign = sha_256(text)
             p = f'time={ts}&sign={sign}'
@@ -278,7 +281,8 @@ class HHYD():
                     gain = rj.get('data').get('gain')
                     self.remain = rj.get("data").get("remain")
                     print(f"阅读文章成功获得{gain}金币")
-                    print(f'当前已经阅读了{rj.get("data").get("read")}篇文章，今日总金币{rj.get("data").get("gold")}，剩余{self.remain}')
+                    print(
+                        f'当前已经阅读了{rj.get("data").get("read")}篇文章，今日总金币{rj.get("data").get("gold")}，剩余{self.remain}')
                 else:
                     print("过检测成功")
                     print(f'当前已经阅读了{rj.get("data").get("read")}篇文章，今日总金币{rj.get("data").get("gold")}，剩余{self.remain}')
@@ -330,6 +334,7 @@ class HHYD():
 
 if __name__ == '__main__':
     pushconfig = os.getenv('wx_pushconfig')
+    print(pushconfig)
     if pushconfig==None:
         print('请检查你的推送变量名称是否填写正确')
         exit(0)
@@ -340,22 +345,22 @@ if __name__ == '__main__':
         print(pushconfig)
         print('请检查你的推送变量参数是否填写正确')
         exit(0)
-    wx_gb = os.getenv('wx_gb')
-    if wx_gb==None:
-        print('请检查你的钢镚脚本变量名称是否填写正确')
+    wx_czgm = os.getenv('wx_czgm')
+    if wx_czgm==None:
+        print('请检查你的充值购买脚本变量名称是否填写正确')
         exit(0)
     try:
-        wx_gb=json.loads(wx_gb.replace("'", '"'))
+        wx_czgm=json.loads(wx_czgm.replace("'", '"'))
     except Exception as e:
         print(e)
-        print(wx_gb)
-        print('请检查你的钢镚脚本变量参数是否填写正确')
+        print(wx_czgm)
+        print('请检查你的充值购买脚本变量参数是否填写正确')
         exit(0)
     printf = pushconfig['printf']  # 打印调试日志0不打印，1打印，若运行异常请打开调试
     appToken = pushconfig['appToken']  # 这个是填wxpusher的appToken
     topicIds = pushconfig['topicIds']  # 这个是wxpusher的topicIds改成你自己的
     key = pushconfig['key']  # key从这里获取http://175.24.153.42:8882/getkey
     getmsg()
-    for i in wx_gb:
-        api = HHYD(i)
+    for i in wx_czgm:
+        api = HHYD({'gfsessionid': i})
         api.run()

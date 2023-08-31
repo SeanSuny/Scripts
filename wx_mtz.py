@@ -7,7 +7,7 @@
 # Wxpusher获取UID: https://wxpusher.zjiecode.com/demo/
 # 变量名 wx_mtz 示例: {"name": "备注", "ck":"这里是Authorization中share:login:后面的值","ts":"这里是推送Wxpusher获取UID"}
 # 变量名 wx_mtz 企业微信 示例: {"name": "备注", "ck":"这里是Authorization中share:login:后面的值","qw":"这里是推送企业微信机器人Key"}
-# 入口：http://tg.1693464194.api.mengmorwpt2.cn/h5_share/ads/tg?user_id=124922
+# 入口：http://tg.1693277586.api.mengmorwpt2.cn/h5_share/ads/tg?user_id=126014
 import time
 import requests
 import random

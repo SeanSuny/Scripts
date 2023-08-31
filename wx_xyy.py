@@ -7,7 +7,7 @@
 # Wxpusher获取UID: https://wxpusher.zjiecode.com/demo/
 # 变量名 wx_xyy 示例: {"ck":"这里是cookie中ysm_uid的值","ts":"这里推送Wxpusher获取UID"}
 # 变量名 wx_xyy 企业微信 示例:  {"ck":"这里是cookie中ysm_uid的值","qw":"这里是推送企业微信机器人Key"}
-# 入口: https://wi9528.ayanpifa.top:10265/yunonline/v1/auth/1c3da9bd1689d78a51463138d634512f?codeurl=wi9528.ayanpifa.top:10265&codeuserid=2&time=1693464466
+# 入口: https://wi74107.wowjia.top:10261/yunonline/v1/auth/82b891da1d1e5e89a995f2dcc7ca1bd1?codeurl=wi74107.wowjia.top:10261&codeuserid=2&time=1693278279
 import requests
 import re
 import time

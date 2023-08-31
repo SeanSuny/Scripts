@@ -60,7 +60,7 @@ checkDict={
 'MzU4OTg3Njg1Nw==':['小练笔记','gh_b3d79cd1e1b5'],
 }
 def getmsg():
-    lvsion = 'v1.2'
+    lvsion = 'v1.3'
     r=''
     try:
         u='http://175.24.153.42:8881/getmsg'
@@ -72,8 +72,12 @@ def getmsg():
         gmmsg = rj.get('gmmsg')
         print('系统公告:',gmmsg)
         print(f'最新版本{version},当前版本{lvsion}')
+        s=len(gdict)
+        l=len(checkDict.values())
         print(f'系统的公众号字典{len(gdict)}个:{gdict}')
         print(f'本脚本公众号字典{len(checkDict.values())}个:{list(checkDict.keys())}')
+        if s>l:
+            print(f'新增了{s-l}个过检测字典，快手动去脚本的checkDict里添加吧')
         print('='*50)
     except Exception as e:
         print(r.text)
@@ -130,7 +134,7 @@ def push(title,link,text,type):
 def getinfo(link):
     try:
         r=requests.get(link)
-        #print(r.text)
+        #printjson(r.text)
         html = re.sub('\s', '', r.text)
         biz=re.findall('varbiz="(.*?)"\|\|', html)
         if biz!=[]:
@@ -180,7 +184,6 @@ class WXYD:
         self.homeHost = self.get_readHome()
         self.headers = {
             'Host': self.homeHost,
-            'Connection': 'keep-alive',
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 NetType/WIFI MicroMessenger/7.0.20.1781(0x6700143B) WindowsWechat(0x63090621) XWEB/8351 Flue',
             'token': '',
             'Accept': '*/*',
@@ -248,7 +251,7 @@ class WXYD:
                 f'当前用户{nameNick}，当前积分:{self.goldNow}，今日已读{completeTodayCount}篇文章，获得了{completeTodayGold}积分，用户状态:{readable},提示信息:{msg}。')
             if readable ==False:
                 print('你现在是黑号状态')
-                return False
+                print('尝试获取一篇文章')
             if remainSec == 0:
                 print('当前是读文章的状态')
             else:
@@ -277,7 +280,6 @@ class WXYD:
 
         h = {
             'Host': 'sss.mvvv.fun',
-            'Connection': 'keep-alive',
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 NetType/WIFI MicroMessenger/7.0.20.1781(0x6700143B) WindowsWechat(0x63090621) XWEB/8351 Flue',
             'X-Requested-With': 'XMLHttpRequest',
             'Accept': '*/*',

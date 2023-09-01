@@ -5,7 +5,7 @@ new Env('微信-充值购买');
 活动入口,微信打开：http://2567109.fhuuf.p0w87d3xn9gp.cloud/?p=2567109
 
 打开活动入口，抓包的任意接口cookies中的gfsessionid参数,
-青龙添加环境变量名称 ：wx_czgm
+青龙添加环境变量名称 ：fwx_czgm
 青龙添加环境变量参数 ：['xxxx']
 单账户 ['xxxx']
 多账户 ['xxxx','xxxx','xxxx']
@@ -13,7 +13,7 @@ new Env('微信-充值购买');
 例如：['123456','djvnffff','xxxxx']
 提现标准默认是10000，与需要修改，请在本脚本最下方，按照提示修改
 内置推送第三方 wxpusher（脚本最下方填写参数）
-青龙添加环境变量名称 ：wx_pushconfig
+青龙添加环境变量名称 ：fwx_pushconfig
 青龙添加环境变量参数 ：{"printf":0,"appToken":"xxxx","topicIds":4781,"key":"xxxx"}
 例如：{"printf":0,"appToken":"AT_r1vNXQdfgxxxxxscPyoORYg","topicIds":1234,"key":"642ae5f1xxxxx6d2334c"}
 
@@ -333,7 +333,7 @@ class HHYD():
 
 
 if __name__ == '__main__':
-    pushconfig = os.getenv('wx_pushconfig')
+    pushconfig = os.getenv('fwx_pushconfig')
     print(pushconfig)
     if pushconfig==None:
         print('请检查你的推送变量名称是否填写正确')
@@ -345,15 +345,15 @@ if __name__ == '__main__':
         print(pushconfig)
         print('请检查你的推送变量参数是否填写正确')
         exit(0)
-    wx_czgm = os.getenv('wx_czgm')
-    if wx_czgm==None:
+    fwx_czgm = os.getenv('fwx_czgm')
+    if fwx_czgm==None:
         print('请检查你的充值购买脚本变量名称是否填写正确')
         exit(0)
     try:
-        wx_czgm=json.loads(wx_czgm.replace("'", '"'))
+        fwx_czgm=json.loads(fwx_czgm.replace("'", '"'))
     except Exception as e:
         print(e)
-        print(wx_czgm)
+        print(fwx_czgm)
         print('请检查你的充值购买脚本变量参数是否填写正确')
         exit(0)
     printf = pushconfig['printf']  # 打印调试日志0不打印，1打印，若运行异常请打开调试
@@ -361,6 +361,6 @@ if __name__ == '__main__':
     topicIds = pushconfig['topicIds']  # 这个是wxpusher的topicIds改成你自己的
     key = pushconfig['key']  # key从这里获取http://175.24.153.42:8882/getkey
     getmsg()
-    for i in wx_czgm:
+    for i in fwx_czgm:
         api = HHYD({'gfsessionid': i})
         api.run()

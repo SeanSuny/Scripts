@@ -388,7 +388,7 @@ if __name__ == '__main__':
         print('=' * 50)
         print(bz)
         for cg in fwx_shy:
-            print(f"\n===================当前第{fwx_shy.index(i)+1}个账户===================")
+            print(f"===================当前第{fwx_shy.index(cg)+1}个账户===================")
             api = WXYD(cg, bz)
             api.run()
             time.sleep(5)

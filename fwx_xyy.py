@@ -388,5 +388,6 @@ if __name__ == '__main__':
     key = pushconfig['key']  # key从这里获取http://175.24.153.42:8882/getkey
     getmsg()
     for i in fwx_xyy:
+        print(f"\n===================当前第{fwx_xyy.index(i)+1}个账户===================")
         api=HHYD({'ysm_uid':i,'txbz':10000})#这里的10000是默认提现标准，代表满10000提现，你也可以改成其他的例如3000
         api.run()

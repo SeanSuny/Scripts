@@ -8,8 +8,8 @@
 #   2.采用Wxpusher进行推送服务(手动过检测),仅需扫码获取UID,无需其他操作
 #   3.企业微信机器人/Wxpusher (二选一)
 # Wxpusher获取UID: https://wxpusher.zjiecode.com/demo/
-# 变量名 wx_clksyd 示例: {"ck":"这里是cookie中authtoken的值","ts":"这里是推送Wxpusher获取UID"}
-# 变量名 wx_clksyd 企业微信 示例: {"ck":"这里是cookie中authtoken的值","qw":"这里是推送企业微信机器人Key"}
+# 变量名 wx_clks 示例: {"ck":"这里是cookie中authtoken的值","ts":"这里是推送Wxpusher获取UID"}
+# 变量名 wx_clks 企业微信 示例: {"ck":"这里是cookie中authtoken的值","qw":"这里是推送企业微信机器人Key"}
 # 入口：https://entry-1318684421.cos.ap-nanjing.myqcloud.com/cos_b.html?openId=oiDdr563TOZlmaRzrEPgBIM_n6DQ
 import requests
 #加密
@@ -24,10 +24,10 @@ import time
 import os
 from urllib.parse import unquote,quote
 
-if os.getenv('wx_clksyd') == None:
+if os.getenv('wx_clks') == None:
     print("Ck异常: 请至少填写一个账号ck!")
     exit()
-ck_token = [eval(line) for line in os.getenv('wx_clksyd').strip().split('\n')]
+ck_token = [eval(line) for line in os.getenv('wx_clks').strip().split('\n')]
 
 # 推送域名
 tsurl = 'https://linxi-send.run.goorm.app'

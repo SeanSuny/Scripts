@@ -5,7 +5,7 @@ new Env('微信-美添赚');
 活动入口,微信打开：http://tg.1693277586.api.mengmorwpt2.cn/h5_share/ads/tg?user_id=126014
 
 打开活动入口，抓包的任意接口cookies中的Authorization参数,
-青龙添加环境变量名称 ：wx_mtz
+青龙添加环境变量名称 ：fwx_mtz
 青龙添加环境变量参数 ：[{'Authorization': 'xxxx'}]
 单账户 [{'Authorization': 'xxxx'}]
 多账户 [{'Authorization': 'xxxx'},{'Authorization': 'xxxx'},{'Authorization': 'xxxx'},]
@@ -13,7 +13,7 @@ new Env('微信-美添赚');
 例如：[{'Authorization': 'share:login:7291356a9xxxxxxdb7bd2ea'},{'Authorization': 'share:login:7291356a9xxxxxxdb7bd2ea'},]
 
 内置推送第三方 wxpusher（脚本最下方填写参数）
-青龙添加环境变量名称 ：wx_pushconfig
+青龙添加环境变量名称 ：fwx_pushconfig
 青龙添加环境变量参数 ：{"printf":0,"appToken":"xxxx","topicIds":4781,"key":"xxxx"}
 例如：{"printf":0,"appToken":"AT_r1vNXQdfgxxxxxscPyoORYg","topicIds":1234,"key":"642ae5f1xxxxx6d2334c"}
 
@@ -306,7 +306,7 @@ class MTZYD():
             self.user_info()
         self.withdraw()
 if __name__ == '__main__':
-    pushconfig = os.getenv('wx_pushconfig')
+    pushconfig = os.getenv('fwx_pushconfig')
     if pushconfig==None:
         print('请检查你的推送变量名称是否填写正确')
         exit(0)
@@ -317,7 +317,7 @@ if __name__ == '__main__':
         print(pushconfig)
         print('请检查你的推送变量参数是否填写正确')
         exit(0)
-    mtzconfig = os.getenv('wx_mtz')
+    mtzconfig = os.getenv('fwx_mtz')
     if mtzconfig==None:
         print('请检查你的美添赚脚本变量名称是否填写正确')
         exit(0)

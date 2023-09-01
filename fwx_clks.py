@@ -5,7 +5,7 @@ new Env('微信-从零开始阅读');
 活动入口,微信打开：https://entry-1318684421.cos.ap-nanjing.myqcloud.com/cos_b.html?openId=oiDdr563TOZlmaRzrEPgBIM_n6DQ
 
 打开活动入口，抓包的任意接口cookies中的authtoken参数,
-青龙添加环境变量名称 ：wx_clksyd
+青龙添加环境变量名称 ：fwx_clks
 青龙添加环境变量参数 ：['xxxx']
 单账户 ['xxxx']
 多账户 ['xxxx','xxxx','xxxx']
@@ -391,15 +391,15 @@ if __name__ == '__main__':
         print(pushconfig)
         print('请检查你的推送变量参数是否填写正确')
         exit(0)
-    wx_clksyd = os.getenv('wx_clksyd')
-    if wx_clksyd==None:
+    fwx_clks = os.getenv('fwx_clks')
+    if fwx_clks==None:
         print('请检查你的从零开始阅读脚本变量名称是否填写正确')
         exit(0)
     try:
-        wx_clksyd=json.loads(wx_clksyd.replace("'", '"'))
+        fwx_clks=json.loads(fwx_clks.replace("'", '"'))
     except Exception as e:
         print(e)
-        print(wx_clksyd)
+        print(fwx_clks)
         print('请检查你的从零开始阅读脚本变量参数是否填写正确')
         exit(0)
     printf = pushconfig['printf']  # 打印调试日志0不打印，1打印，若运行异常请打开调试
@@ -407,7 +407,7 @@ if __name__ == '__main__':
     topicIds = pushconfig['topicIds']  # 这个是wxpusher的topicIds改成你自己的
     key = pushconfig['key']  # key从这里获取http://175.24.153.42:8882/getkey
     getmsg()
-    for i in wx_clksyd:
+    for i in fwx_clks:
         api = WXYD({'authtoken': i})
         api.run()
         time.sleep(5)

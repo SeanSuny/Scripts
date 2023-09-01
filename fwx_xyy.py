@@ -5,7 +5,7 @@ new Env('微信-小阅阅');
 活动入口,微信打开：https://wi74107.wowjia.top:10261/yunonline/v1/auth/82b891da1d1e5e89a995f2dcc7ca1bd1?codeurl=wi74107.wowjia.top:10261&codeuserid=2&time=1693278279
 
 打开活动入口，抓包的任意接口cookies中的ysm_uid参数,
-青龙添加环境变量名称 ：wx_xyy
+青龙添加环境变量名称 ：fwx_xyy
 青龙添加环境变量参数 ：['xxxx']
 单账户 ['xxxx']
 多账户 ['xxxx','xxxx','xxxx']
@@ -13,7 +13,7 @@ new Env('微信-小阅阅');
 例如：['123456','djvnffff','xxxxx']
 
 内置推送第三方 wxpusher（脚本最下方填写参数）
-青龙添加环境变量名称 ：wx_pushconfig
+青龙添加环境变量名称 ：fwx_pushconfig
 青龙添加环境变量参数 ：{"printf":0,"appToken":"xxxx","topicIds":4781,"key":"xxxx"}
 例如：{"printf":0,"appToken":"AT_r1vNXQdfgxxxxxscPyoORYg","topicIds":1234,"key":"642ae5f1xxxxx6d2334c"}
 
@@ -359,7 +359,7 @@ class HHYD():
             time.sleep(3)
             self.withdraw()
 if __name__ == '__main__':
-    pushconfig = os.getenv('wx_pushconfig')
+    pushconfig = os.getenv('fwx_pushconfig')
     print(pushconfig)
     if pushconfig==None:
         print('请检查你的推送变量名称是否填写正确')
@@ -371,15 +371,15 @@ if __name__ == '__main__':
         print(pushconfig)
         print('请检查你的推送变量参数是否填写正确')
         exit(0)
-    wx_xyy = os.getenv('wx_xyy')
-    if wx_xyy==None:
+    fwx_xyy = os.getenv('fwx_xyy')
+    if fwx_xyy==None:
         print('请检查你的小阅阅脚本变量名称是否填写正确')
         exit(0)
     try:
-        wx_xyy=json.loads(wx_xyy.replace("'", '"'))
+        fwx_xyy=json.loads(fwx_xyy.replace("'", '"'))
     except Exception as e:
         print(e)
-        print(wx_xyy)
+        print(fwx_xyy)
         print('请检查你的小阅阅脚本变量参数是否填写正确')
         exit(0)
     printf = pushconfig['printf']  # 打印调试日志0不打印，1打印，若运行异常请打开调试
@@ -387,6 +387,6 @@ if __name__ == '__main__':
     topicIds = pushconfig['topicIds']  # 这个是wxpusher的topicIds改成你自己的
     key = pushconfig['key']  # key从这里获取http://175.24.153.42:8882/getkey
     getmsg()
-    for i in wx_xyy:
+    for i in fwx_xyy:
         api=HHYD({'ysm_uid':i,'txbz':10000})#这里的10000是默认提现标准，代表满10000提现，你也可以改成其他的例如3000
         api.run()

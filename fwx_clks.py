@@ -408,6 +408,7 @@ if __name__ == '__main__':
     key = pushconfig['key']  # key从这里获取http://175.24.153.42:8882/getkey
     getmsg()
     for i in fwx_clks:
+        print(f"\n===================当前第{fwx_clks.index(i)+1}个账户===================")
         api = WXYD({'authtoken': i})
         api.run()
         time.sleep(5)

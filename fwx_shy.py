@@ -9,14 +9,14 @@ new Env('微信-三合一阅读');
 http://u.cocozx.cn/api/user/info
 抓包 info接口的请求体中的un和token参数
 
-青龙添加环境变量名称 ：wx_shy
+青龙添加环境变量名称 ：fwx_shy
 青龙添加环境变量参数 ：[{'un': 'xxxx', 'token': 'xxxx'}]
 单账户 [{'un': 'xxxx', 'token': 'xxxx'}]
 多账户 [{'un': 'xxxx', 'token': 'xxxx'},{'un': 'xxxx', 'token': 'xxxx'},{'un': 'xxxx', 'token': 'xxxx'},]
 提现标准默认是10000
 
 内置推送第三方 wxpusher（脚本最下方填写参数）
-青龙添加环境变量名称 ：wx_pushconfig
+青龙添加环境变量名称 ：fwx_pushconfig
 青龙添加环境变量参数 ：{"printf":0,"appToken":"xxxx","topicIds":4781,"key":"xxxx"}
 例如：{"printf":0,"appToken":"AT_r1vNXQdfgxxxxxscPyoORYg","topicIds":1234,"key":"642ae5f1xxxxx6d2334c"}
 
@@ -343,7 +343,7 @@ class WXYD:
 
 
 if __name__ == '__main__':
-    pushconfig = os.getenv('wx_pushconfig')
+    pushconfig = os.getenv('fwx_pushconfig')
     if pushconfig==None:
         print('请检查你的推送变量名称是否填写正确')
         exit(0)
@@ -354,15 +354,15 @@ if __name__ == '__main__':
         print(pushconfig)
         print('请检查你的推送变量参数是否填写正确')
         exit(0)
-    wx_shy = os.getenv('wx_shy')
-    if wx_shy==None:
+    fwx_shy = os.getenv('fwx_shy')
+    if fwx_shy==None:
         print('请检查你的星空花花元宝脚本变量名称是否填写正确')
         exit(0)
     try:
-        wx_shy=json.loads(wx_shy.replace("'", '"'))
+        fwx_shy=json.loads(fwx_shy.replace("'", '"'))
     except Exception as e:
         print(e)
-        print(wx_shy)
+        print(fwx_shy)
         print('请检查你的星空花花元宝脚本变量参数是否填写正确')
         exit(0)
     printf = pushconfig['printf']
@@ -387,7 +387,7 @@ if __name__ == '__main__':
     for bz in bzl:
         print('=' * 50)
         print(bz)
-        for cg in wx_shy:
+        for cg in fwx_shy:
             api = WXYD(cg, bz)
             api.run()
             time.sleep(5)

@@ -12,7 +12,7 @@ http://u.cocozx.cn/api/user/info
 青龙添加环境变量名称 ：fwx_shy
 青龙添加环境变量参数 ：[{'un': 'xxxx', 'token': 'xxxx'}]
 单账户 [{'un': 'xxxx', 'token': 'xxxx'}]
-多账户 [{'un': 'xxxx', 'token': 'xxxx'},{'un': 'xxxx', 'token': 'xxxx'},{'un': 'xxxx', 'token': 'xxxx'},]
+多账户 [{'un': 'xxxx', 'token': 'xxxx'},{'un': 'xxxx', 'token': 'xxxx'},{'un': 'xxxx', 'token': 'xxxx'}]
 提现标准默认是10000
 
 内置推送第三方 wxpusher（脚本最下方填写参数）

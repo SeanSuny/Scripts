@@ -15,7 +15,7 @@ new Env('微信-从零开始阅读');
 
 提现标准：3毛就提现
 内置推送第三方 wxpusher（脚本最下方填写参数）
-青龙添加环境变量名称 ：wx_pushconfig
+青龙添加环境变量名称 ：fwx_pushconfig
 青龙添加环境变量参数 ：{"printf":0,"appToken":"xxxx","topicIds":4781,"key":"xxxx"}
 例如：{"printf":0,"appToken":"AT_r1vNXQdfgxxxxxscPyoORYg","topicIds":1234,"key":"642ae5f1xxxxx6d2334c"}
 
@@ -380,7 +380,7 @@ class WXYD:
 
 if __name__ == '__main__':
     print(list(checkDict.keys()))
-    pushconfig = os.getenv('wx_pushconfig')
+    pushconfig = os.getenv('fwx_pushconfig')
     if pushconfig==None:
         print('请检查你的推送变量名称是否填写正确')
         exit(0)

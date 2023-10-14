@@ -10,7 +10,7 @@
 # @Copyright    : Copyright ©2019-2023 Sean,Inc
 ############################################################
 """
-cron: 10 1,9,17 * * *
+cron: 10 1,9,19 * * *
 new Env('同步COOKIE到青龙');
 环境变量添加 ql_host ql_client_id ql_client_secret
 """

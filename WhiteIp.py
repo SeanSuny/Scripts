@@ -49,6 +49,8 @@ def juliang():
         print(f"巨量：白名单更新失败！")
         result_list.append(f"巨量：白名单更新失败！")
 
+
+if __name__ == '__main__':
     xiequ()
     time.sleep(5)
     juliang()

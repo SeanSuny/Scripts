@@ -4,7 +4,7 @@
 import time
 import hashlib
 import requests
-from notify import send
+from sendNotify import send
 
 result_list = []
 

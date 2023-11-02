@@ -1,14 +1,3 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-############################################################
-# @Author       : Sean
-# @Date         : 2023-03-31 11:08:23
-# @LastEditors  : Sean
-# @LastEditTime : 2023-03-31 18:07:02
-# @Description  : 这是由 Sean 创建
-# @FilePath     : c:/Users/Sean/Desktop/cookie_Update_hw.py
-# @Copyright    : Copyright ©2019-2023 Sean,Inc
-############################################################
 """
 cron: 15 1,9,17 * * *
 new Env('同步COOKIE到HW');

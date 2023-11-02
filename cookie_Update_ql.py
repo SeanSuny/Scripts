@@ -1,15 +1,3 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-############################################################
-# @Author       : Sean
-# @Date         : 2023-03-22 11:08:23
-# @LastEditors  : Sean
-# @LastEditTime : 2023-03-23 18:14:54
-# @Description  : 这是由 Sean 创建
-# @FilePath     : c:/Users/Sean/Desktop/scripts-main/cookie_Update_ql.py
-# @Copyright    : Copyright ©2019-2023 Sean,Inc
-############################################################
-"""
 cron: 10 1,9,19 * * *
 new Env('同步COOKIE到青龙');
 环境变量添加 ql_host ql_client_id ql_client_secret

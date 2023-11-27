@@ -1,4 +1,4 @@
-# cron: 5 3 * * 1,3,5
+# cron: 5 */3 * * *
 # new Env('IP地址池白名单');
 
 import time
